@@ -41,26 +41,24 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol AliyunPushIosApi {
-  func initPush(appKey: String?, appSecret: String?, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func addAlias(alias: String, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func listAlias(completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func removeAlias(alias: String, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func bindAccount(account: String, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func bindPhoneNumber(phone: String, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func bindTag(tags: [String], target: Int64, alias: String?, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func unbindTag(tags: [String], target: Int64, alias: String?, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func listTags(target: Int64, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func clearNotifications(completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
+  func initPush(appKey: String?, appSecret: String?, completion: @escaping (Result<Void, Error>) -> Void)
+  func addAlias(alias: String, completion: @escaping (Result<Void, Error>) -> Void)
+  func listAlias(completion: @escaping (Result<[String], Error>) -> Void)
+  func removeAlias(alias: String, completion: @escaping (Result<Void, Error>) -> Void)
+  func bindAccount(account: String, completion: @escaping (Result<Void, Error>) -> Void)
+  func bindPhoneNumber(phone: String, completion: @escaping (Result<Void, Error>) -> Void)
+  func bindTag(tags: [String], target: Int64, alias: String?, completion: @escaping (Result<Void, Error>) -> Void)
+  func unbindTag(tags: [String], target: Int64, alias: String?, completion: @escaping (Result<Void, Error>) -> Void)
+  func listTags(target: Int64, completion: @escaping (Result<[String], Error>) -> Void)
   func getDeviceToken(completion: @escaping (Result<String, Error>) -> Void)
   func getDeviceId(completion: @escaping (Result<String, Error>) -> Void)
   func isIOSChannelOpened(completion: @escaping (Result<Bool, Error>) -> Void)
-  func setBadgeNum(num: Int64, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func setPluginLogEnabled(enabled: Bool, completion: @escaping (Result<Void, Error>) -> Void)
-  func showNoticeWhenForeground(enable: Bool, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func syncBadgeNum(num: Int64, completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func turnOnDebug(completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func unbindAccount(completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
-  func unbindPhoneNumber(completion: @escaping (Result<[AnyHashable: Any?], Error>) -> Void)
+  func setBadgeNum(num: Int64, completion: @escaping (Result<Void, Error>) -> Void)
+  func showNoticeWhenForeground(enable: Bool, completion: @escaping (Result<Void, Error>) -> Void)
+  func syncBadgeNum(num: Int64, completion: @escaping (Result<Void, Error>) -> Void)
+  func turnOnDebug(completion: @escaping (Result<Void, Error>) -> Void)
+  func unbindAccount(completion: @escaping (Result<Void, Error>) -> Void)
+  func unbindPhoneNumber(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -77,8 +75,8 @@ class AliyunPushIosApiSetup {
         let appSecretArg: String? = nilOrValue(args[1])
         api.initPush(appKey: appKeyArg, appSecret: appSecretArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -94,8 +92,8 @@ class AliyunPushIosApiSetup {
         let aliasArg = args[0] as! String
         api.addAlias(alias: aliasArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -126,8 +124,8 @@ class AliyunPushIosApiSetup {
         let aliasArg = args[0] as! String
         api.removeAlias(alias: aliasArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -143,8 +141,8 @@ class AliyunPushIosApiSetup {
         let accountArg = args[0] as! String
         api.bindAccount(account: accountArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -160,8 +158,8 @@ class AliyunPushIosApiSetup {
         let phoneArg = args[0] as! String
         api.bindPhoneNumber(phone: phoneArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -179,8 +177,8 @@ class AliyunPushIosApiSetup {
         let aliasArg: String? = nilOrValue(args[2])
         api.bindTag(tags: tagsArg, target: targetArg, alias: aliasArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -198,8 +196,8 @@ class AliyunPushIosApiSetup {
         let aliasArg: String? = nilOrValue(args[2])
         api.unbindTag(tags: tagsArg, target: targetArg, alias: aliasArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -224,21 +222,6 @@ class AliyunPushIosApiSetup {
       }
     } else {
       listTagsChannel.setMessageHandler(nil)
-    }
-    let clearNotificationsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.clearNotifications\(channelSuffix)", binaryMessenger: binaryMessenger)
-    if let api = api {
-      clearNotificationsChannel.setMessageHandler { _, reply in
-        api.clearNotifications { result in
-          switch result {
-          case .success(let res):
-            reply(wrapResult(res))
-          case .failure(let error):
-            reply(wrapError(error))
-          }
-        }
-      }
-    } else {
-      clearNotificationsChannel.setMessageHandler(nil)
     }
     let getApnsDeviceTokenChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.getApnsDeviceToken\(channelSuffix)", binaryMessenger: binaryMessenger)
     if let api = api {
@@ -292,23 +275,6 @@ class AliyunPushIosApiSetup {
         let numArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
         api.setBadgeNum(num: numArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
-          case .failure(let error):
-            reply(wrapError(error))
-          }
-        }
-      }
-    } else {
-      setIOSBadgeNumChannel.setMessageHandler(nil)
-    }
-    let setPluginLogEnabledChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.setPluginLogEnabled\(channelSuffix)", binaryMessenger: binaryMessenger)
-    if let api = api {
-      setPluginLogEnabledChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let enabledArg = args[0] as! Bool
-        api.setPluginLogEnabled(enabled: enabledArg) { result in
-          switch result {
           case .success:
             reply(wrapResult(nil))
           case .failure(let error):
@@ -317,7 +283,7 @@ class AliyunPushIosApiSetup {
         }
       }
     } else {
-      setPluginLogEnabledChannel.setMessageHandler(nil)
+      setIOSBadgeNumChannel.setMessageHandler(nil)
     }
     let showIOSNoticeWhenForegroundChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.showIOSNoticeWhenForeground\(channelSuffix)", binaryMessenger: binaryMessenger)
     if let api = api {
@@ -326,8 +292,8 @@ class AliyunPushIosApiSetup {
         let enableArg = args[0] as! Bool
         api.showNoticeWhenForeground(enable: enableArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -343,8 +309,8 @@ class AliyunPushIosApiSetup {
         let numArg = args[0] is Int64 ? args[0] as! Int64 : Int64(args[0] as! Int32)
         api.syncBadgeNum(num: numArg) { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -358,8 +324,8 @@ class AliyunPushIosApiSetup {
       turnOnIOSDebugChannel.setMessageHandler { _, reply in
         api.turnOnDebug { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -373,8 +339,8 @@ class AliyunPushIosApiSetup {
       unbindAccountChannel.setMessageHandler { _, reply in
         api.unbindAccount { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }
@@ -388,8 +354,8 @@ class AliyunPushIosApiSetup {
       unbindPhoneNumberChannel.setMessageHandler { _, reply in
         api.unbindPhoneNumber { result in
           switch result {
-          case .success(let res):
-            reply(wrapResult(res))
+          case .success:
+            reply(wrapResult(nil))
           case .failure(let error):
             reply(wrapError(error))
           }

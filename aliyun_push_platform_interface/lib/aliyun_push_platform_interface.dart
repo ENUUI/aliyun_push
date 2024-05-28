@@ -23,60 +23,59 @@ abstract class AliyunPushInterface extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<Map<dynamic, dynamic>> initPush({String? appKey, String? appSecret});
+  Future<void> initPush({String? appKey, String? appSecret});
 
   /// 获取deviceId
   Future<String> getDeviceId();
 
   /// 绑定账号
-  Future<Map<dynamic, dynamic>> bindAccount(String account);
+  Future<void> bindAccount(String account);
 
   ///解绑账号
-  Future<Map<dynamic, dynamic>> unbindAccount();
+  Future<void> unbindAccount();
 
   ///添加别名
-  Future<Map<dynamic, dynamic>> addAlias(String alias);
+  Future<void> addAlias(String alias);
 
-  ///移除别名
-  Future<Map<dynamic, dynamic>> removeAlias(String alias);
+  /// 移除别名
+  /// 当alias为length = 0时，删除当前设备绑定所有别名
+  Future<void> removeAlias(String alias);
 
   ///查询绑定别名
-  Future<Map<dynamic, dynamic>> listAlias();
+  Future<List> listAlias();
 
   ///添加标签
   ///
   /// @param tags     标签名
   /// @param target   目标类型，1: 本设备  2: 本设备绑定账号  3: 别名
   /// @param alias    别名（仅当target = 3时生效）
-  Future<Map<dynamic, dynamic>> bindTag(List<String> tags,
-      {int target = 1, String? alias});
+  Future<void> bindTag(List<String> tags, {int target = 1, String? alias});
 
   ///移除标签
   ///
   /// @param tags     标签名
   /// @param target   目标类型，1: 本设备  2: 本设备绑定账号  3: 别名
   /// @param alias    别名（仅当target = 3时生效）
-  Future<Map<dynamic, dynamic>> unbindTag(List<String> tags,
-      {int target = 1, String? alias});
+  Future<void> unbindTag(List<String> tags, {int target = 1, String? alias});
 
   /// 查询标签列表
   ///
   /// @param target   目标类型，1: 本设备
-  Future<Map<dynamic, dynamic>> listTags({int target = 1});
+  Future<List> listTags({int target = 1});
 
   ///绑定手机号码
-  Future<Map<dynamic, dynamic>> bindPhoneNumber(String phone);
+  Future<void> bindPhoneNumber(String phone);
 
   ///解绑手机号码
-  Future<Map<dynamic, dynamic>> unbindPhoneNumber();
+  Future<void> unbindPhoneNumber();
 
   ///设置通知分组展示，只针对android
   ///
   ///@param inGroup 是否分组折叠展示
-  Future<Map<dynamic, dynamic>> setNotificationInGroup(bool inGroup);
+  Future<void> setNotificationInGroup(bool inGroup);
 
   /// 清除所有通知
-  Future<Map<dynamic, dynamic>> clearNotifications();
+  Future<void> clearNotifications();
 
   void setPluginLogEnabled(bool enabled);
 
@@ -84,7 +83,7 @@ abstract class AliyunPushInterface extends PlatformInterface {
   ///
   /// Android only
   /// Other platforms will throw PlatformException
-  Future<Map<dynamic, dynamic>> createAndroidChannel(
+  Future<void> createAndroidChannel(
       String id, String name, int importance, String description,
       {String? groupId,
       bool? allowBubbles,
@@ -102,8 +101,7 @@ abstract class AliyunPushInterface extends PlatformInterface {
   ///
   /// Android only
   /// Other platforms will throw PlatformException
-  Future<Map<dynamic, dynamic>> createAndroidChannelGroup(
-      String id, String name, String desc);
+  Future<void> createAndroidChannelGroup(String id, String name, String desc);
 
   /// 检查通知状态
   ///
@@ -117,19 +115,19 @@ abstract class AliyunPushInterface extends PlatformInterface {
   ///
   /// iOS only
   /// Other platforms will throw PlatformException
-  Future<Map<dynamic, dynamic>> turnOnIOSDebug();
+  Future<void> turnOnIOSDebug();
 
   /// iOS only
   /// Other platforms will throw PlatformException
-  Future<Map<dynamic, dynamic>> showIOSNoticeWhenForeground(bool enable);
+  Future<void> showIOSNoticeWhenForeground(bool enable);
 
   /// iOS only
   /// Other platforms will throw PlatformException
-  Future<Map<dynamic, dynamic>> setIOSBadgeNum(int num);
+  Future<void> setIOSBadgeNum(int num);
 
   /// iOS only
   /// Other platforms will throw PlatformException
-  Future<Map<dynamic, dynamic>> syncIOSBadgeNum(int num);
+  Future<void> syncIOSBadgeNum(int num);
 
   /// iOS only
   /// Other platforms will throw PlatformException
@@ -145,19 +143,12 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
   MethodChannel get channel => _channel;
 
   @override
-  Future<Map<dynamic, dynamic>> initPush({
+  Future<void> initPush({
     String? appKey,
     String? appSecret,
   }) async {
-    final r = await _channel.invokeMapMethod(
+    await _channel.invokeMapMethod(
         "initPush", {"appKey": appKey, "appSecret": appSecret});
-    if (r == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
-    }
-    return r;
   }
 
   @override
@@ -173,54 +164,44 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
   }
 
   ///设置log的级别
-  Future<Map<dynamic, dynamic>> setAndroidLogLevel(int level) async {
+  Future<void> setAndroidLogLevel(int level) async {
     if (!Platform.isAndroid) {
       throw PlatformException(
         code: "",
         message: 'Only support Android',
       );
     }
-    Map<dynamic, dynamic> result =
-        await channel.invokeMethod('setLogLevel', {'level': level});
-    return result;
+    await channel.invokeMethod('setLogLevel', {'level': level});
   }
 
   ///绑定账号
   @override
-  Future<Map<dynamic, dynamic>> bindAccount(String account) async {
-    Map<dynamic, dynamic> bindResult =
-        await channel.invokeMethod('bindAccount', {'account': account});
-    return bindResult;
+  Future<void> bindAccount(String account) async {
+    await channel.invokeMethod('bindAccount', {'account': account});
   }
 
   ///解绑账号
   @override
-  Future<Map<dynamic, dynamic>> unbindAccount() async {
-    Map<dynamic, dynamic> unbindResult =
-        await channel.invokeMethod('unbindAccount');
-    return unbindResult;
+  Future<void> unbindAccount() async {
+    await channel.invokeMethod('unbindAccount');
   }
 
   ///添加别名
   @override
-  Future<Map<dynamic, dynamic>> addAlias(String alias) async {
-    Map<dynamic, dynamic> addResult =
-        await channel.invokeMethod('addAlias', {'alias': alias});
-    return addResult;
+  Future<void> addAlias(String alias) async {
+    await channel.invokeMethod('addAlias', {'alias': alias});
   }
 
   ///移除别名
   @override
-  Future<Map<dynamic, dynamic>> removeAlias(String alias) async {
-    Map<dynamic, dynamic> removeResult =
-        await channel.invokeMethod('removeAlias', {'alias': alias});
-    return removeResult;
+  Future<void> removeAlias(String alias) async {
+    await channel.invokeMethod('removeAlias', {'alias': alias});
   }
 
   ///查询绑定别名
   @override
-  Future<Map<dynamic, dynamic>> listAlias() async {
-    Map<dynamic, dynamic> listResult = await channel.invokeMethod('listAlias');
+  Future<List> listAlias() async {
+    List listResult = await channel.invokeMethod('listAlias');
     return listResult;
   }
 
@@ -230,11 +211,15 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
   /// @param target   目标类型，1: 本设备  2: 本设备绑定账号  3: 别名
   /// @param alias    别名（仅当target = 3时生效）
   @override
-  Future<Map<dynamic, dynamic>> bindTag(List<String> tags,
-      {int target = 1, String? alias}) async {
-    Map<dynamic, dynamic> bindResult = await channel.invokeMethod(
-        'bindTag', {'tags': tags, 'target': target, 'alias': alias});
-    return bindResult;
+  Future<void> bindTag(
+    List<String> tags, {
+    int target = 1,
+    String? alias,
+  }) async {
+    await channel.invokeMethod(
+      'bindTag',
+      {'tags': tags, 'target': target, 'alias': alias},
+    );
   }
 
   ///移除标签
@@ -243,84 +228,75 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
   /// @param target   目标类型，1: 本设备  2: 本设备绑定账号  3: 别名
   /// @param alias    别名（仅当target = 3时生效）
   @override
-  Future<Map<dynamic, dynamic>> unbindTag(List<String> tags,
+  Future<void> unbindTag(List<String> tags,
       {int target = 1, String? alias}) async {
-    Map<dynamic, dynamic> unbindResult = await channel.invokeMethod(
+    await channel.invokeMethod(
         'unbindTag', {'tags': tags, 'target': target, 'alias': alias});
-    return unbindResult;
   }
 
   /// 查询标签列表
   ///
   /// @param target   目标类型，1: 本设备
   @override
-  Future<Map<dynamic, dynamic>> listTags({int target = 1}) async {
-    Map<dynamic, dynamic> listResult =
+  Future<List> listTags({int target = 1}) async {
+    final List listResult =
         await channel.invokeMethod('listTags', {'target': target});
     return listResult;
   }
 
   ///绑定手机号码
   @override
-  Future<Map<dynamic, dynamic>> bindPhoneNumber(String phone) async {
+  Future<void> bindPhoneNumber(String phone) async {
     if (!Platform.isAndroid) {
       throw PlatformException(
         code: "",
         message: 'Only support Android',
       );
     }
-    Map<dynamic, dynamic> bindResult =
-        await channel.invokeMethod('bindPhoneNumber', {'phone': phone});
-    return bindResult;
+    await channel.invokeMethod('bindPhoneNumber', {'phone': phone});
   }
 
   ///解绑手机号码
   @override
-  Future<Map<dynamic, dynamic>> unbindPhoneNumber() async {
+  Future<void> unbindPhoneNumber() async {
     if (!Platform.isAndroid) {
       throw PlatformException(
         code: "",
         message: 'Only support Android',
       );
     }
-    Map<dynamic, dynamic> unbindResult =
-        await channel.invokeMethod('unbindPhoneNumber');
-    return unbindResult;
+    await channel.invokeMethod('unbindPhoneNumber');
   }
 
   ///设置通知分组展示，只针对android
   ///
   ///@param inGroup 是否分组折叠展示
   @override
-  Future<Map<dynamic, dynamic>> setNotificationInGroup(bool inGroup) async {
+  Future<void> setNotificationInGroup(bool inGroup) async {
     if (!Platform.isAndroid) {
       throw PlatformException(
         code: "",
         message: 'Only support Android',
       );
     }
-    Map<dynamic, dynamic> result = await channel
-        .invokeMethod('setNotificationInGroup', {'inGroup': inGroup});
-    return result;
+    await channel.invokeMethod('setNotificationInGroup', {'inGroup': inGroup});
   }
 
   ///清除所有通知
   @override
-  Future<Map<dynamic, dynamic>> clearNotifications() async {
+  Future<void> clearNotifications() async {
     if (!Platform.isAndroid) {
       throw PlatformException(
         code: "",
         message: 'Only support Android',
       );
     }
-    Map<dynamic, dynamic> result =
-        await channel.invokeMethod('clearNotifications');
-    return result;
+    await channel.invokeMethod('clearNotifications');
   }
 
   ///创建Android平台的NotificationChannel
   @override
-  Future<Map<dynamic, dynamic>> createAndroidChannel(
+  Future<void> createAndroidChannel(
       String id, String name, int importance, String description,
       {String? groupId,
       bool? allowBubbles,
@@ -339,8 +315,7 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
         message: 'Only support Android',
       );
     }
-    Map<dynamic, dynamic> createResult =
-        await channel.invokeMethod('createChannel', {
+    await channel.invokeMethod('createChannel', {
       'id': id,
       'name': name,
       'importance': importance,
@@ -357,12 +332,11 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
       'vibration': vibration,
       'vibrationPatterns': vibrationPatterns
     });
-    return createResult;
   }
 
   ///创建通知通道的分组
   @override
-  Future<Map<dynamic, dynamic>> createAndroidChannelGroup(
+  Future<void> createAndroidChannelGroup(
       String id, String name, String desc) async {
     if (!Platform.isAndroid) {
       throw PlatformException(
@@ -370,9 +344,8 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
         message: 'Only support Android',
       );
     }
-    Map<dynamic, dynamic> createResult = await channel.invokeMethod(
+    await channel.invokeMethod(
         'createChannelGroup', {'id': id, 'name': name, 'desc': desc});
-    return createResult;
   }
 
   ///检查通知状态
@@ -393,54 +366,47 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
 
   ///开启iOS的debug日志
   @override
-  Future<Map<dynamic, dynamic>> turnOnIOSDebug() async {
+  Future<void> turnOnIOSDebug() async {
     if (!Platform.isIOS) {
       throw PlatformException(
         code: '',
         message: 'Only support iOS',
       );
     }
-    Map<dynamic, dynamic> result = await channel.invokeMethod('turnOnDebug');
-    return result;
+    await channel.invokeMethod('turnOnDebug');
   }
 
   @override
-  Future<Map<dynamic, dynamic>> showIOSNoticeWhenForeground(bool enable) async {
+  Future<void> showIOSNoticeWhenForeground(bool enable) async {
     if (!Platform.isIOS) {
       throw PlatformException(
         code: '',
         message: 'Only support iOS',
       );
     }
-    Map<dynamic, dynamic> result = await channel
-        .invokeMethod('showNoticeWhenForeground', {'enable': enable});
-    return result;
+    await channel.invokeMethod('showNoticeWhenForeground', {'enable': enable});
   }
 
   @override
-  Future<Map<dynamic, dynamic>> setIOSBadgeNum(int num) async {
+  Future<void> setIOSBadgeNum(int num) async {
     if (!Platform.isIOS) {
       throw PlatformException(
         code: '',
         message: 'Only support iOS',
       );
     }
-    Map<dynamic, dynamic> result =
-        await channel.invokeMethod('setBadgeNum', {'badgeNum': num});
-    return result;
+    await channel.invokeMethod('setBadgeNum', {'badgeNum': num});
   }
 
   @override
-  Future<Map<dynamic, dynamic>> syncIOSBadgeNum(int num) async {
+  Future<void> syncIOSBadgeNum(int num) async {
     if (!Platform.isIOS) {
       throw PlatformException(
         code: '',
         message: 'Only support iOS',
       );
     }
-    Map<dynamic, dynamic> result =
-        await channel.invokeMethod('syncBadgeNum', {'badgeNum': num});
-    return result;
+    await channel.invokeMethod('syncBadgeNum', {'badgeNum': num});
   }
 
   @override

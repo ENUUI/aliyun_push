@@ -28,7 +28,7 @@ class AliyunPushIosApi {
 
   final String __pigeon_messageChannelSuffix;
 
-  Future<Map<Object?, Object?>> initPush({String? appKey, String? appSecret}) async {
+  Future<void> initPush({String? appKey, String? appSecret}) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.initPush$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -45,17 +45,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> addAlias(String alias) async {
+  Future<void> addAlias(String alias) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.addAlias$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -72,17 +67,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> listAlias() async {
+  Future<List<String?>> listAlias() async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.listAlias$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -105,11 +95,11 @@ class AliyunPushIosApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<String?>();
     }
   }
 
-  Future<Map<Object?, Object?>> removeAlias(String alias) async {
+  Future<void> removeAlias(String alias) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.removeAlias$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -126,17 +116,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> bindAccount(String account) async {
+  Future<void> bindAccount(String account) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.bindAccount$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -153,17 +138,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> bindPhoneNumber(String phone) async {
+  Future<void> bindPhoneNumber(String phone) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.bindPhoneNumber$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -180,17 +160,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> bindTag(List<String?> tags, {int target = 1, String? alias,}) async {
+  Future<void> bindTag(List<String?> tags, {int target = 1, String? alias,}) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.bindTag$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -207,17 +182,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> unbindTag(List<String?> tags, {int target = 1, String? alias,}) async {
+  Future<void> unbindTag(List<String?> tags, {int target = 1, String? alias,}) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.unbindTag$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -234,17 +204,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> listTags({int target = 1}) async {
+  Future<List<String?>> listTags({int target = 1}) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.listTags$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -267,34 +232,7 @@ class AliyunPushIosApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
-    }
-  }
-
-  Future<Map<Object?, Object?>> clearNotifications() async {
-    final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.clearNotifications$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
-      __pigeon_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: __pigeon_binaryMessenger,
-    );
-    final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(null) as List<Object?>?;
-    if (__pigeon_replyList == null) {
-      throw _createConnectionError(__pigeon_channelName);
-    } else if (__pigeon_replyList.length > 1) {
-      throw PlatformException(
-        code: __pigeon_replyList[0]! as String,
-        message: __pigeon_replyList[1] as String?,
-        details: __pigeon_replyList[2],
-      );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
-    } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return (__pigeon_replyList[0] as List<Object?>?)!.cast<String?>();
     }
   }
 
@@ -379,7 +317,7 @@ class AliyunPushIosApi {
     }
   }
 
-  Future<Map<Object?, Object?>> setIOSBadgeNum(int num) async {
+  Future<void> setIOSBadgeNum(int num) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.setIOSBadgeNum$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -396,39 +334,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
-    } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
-    }
-  }
-
-  Future<void> setPluginLogEnabled(bool enabled) async {
-    final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.setPluginLogEnabled$__pigeon_messageChannelSuffix';
-    final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
-      __pigeon_channelName,
-      pigeonChannelCodec,
-      binaryMessenger: __pigeon_binaryMessenger,
-    );
-    final List<Object?>? __pigeon_replyList =
-        await __pigeon_channel.send(<Object?>[enabled]) as List<Object?>?;
-    if (__pigeon_replyList == null) {
-      throw _createConnectionError(__pigeon_channelName);
-    } else if (__pigeon_replyList.length > 1) {
-      throw PlatformException(
-        code: __pigeon_replyList[0]! as String,
-        message: __pigeon_replyList[1] as String?,
-        details: __pigeon_replyList[2],
-      );
     } else {
       return;
     }
   }
 
-  Future<Map<Object?, Object?>> showIOSNoticeWhenForeground(bool enable) async {
+  Future<void> showIOSNoticeWhenForeground(bool enable) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.showIOSNoticeWhenForeground$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -445,17 +356,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> syncIOSBadgeNum(int num) async {
+  Future<void> syncIOSBadgeNum(int num) async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.syncIOSBadgeNum$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -472,17 +378,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> turnOnIOSDebug() async {
+  Future<void> turnOnIOSDebug() async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.turnOnIOSDebug$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -499,17 +400,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> unbindAccount() async {
+  Future<void> unbindAccount() async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.unbindAccount$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -526,17 +422,12 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 
-  Future<Map<Object?, Object?>> unbindPhoneNumber() async {
+  Future<void> unbindPhoneNumber() async {
     final String __pigeon_channelName = 'dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.unbindPhoneNumber$__pigeon_messageChannelSuffix';
     final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
       __pigeon_channelName,
@@ -553,13 +444,8 @@ class AliyunPushIosApi {
         message: __pigeon_replyList[1] as String?,
         details: __pigeon_replyList[2],
       );
-    } else if (__pigeon_replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
     } else {
-      return (__pigeon_replyList[0] as Map<Object?, Object?>?)!;
+      return;
     }
   }
 }

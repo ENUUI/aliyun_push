@@ -9,43 +9,39 @@ import 'package:pigeon/pigeon.dart';
 abstract class AliyunPushIosApi {
   @async
   @SwiftFunction('initPush(appKey:appSecret:)')
-  Map initPush({String? appKey, String? appSecret});
+  void initPush({String? appKey, String? appSecret});
 
   @async
   @SwiftFunction('addAlias(alias:)')
-  Map addAlias(String alias);
+  void addAlias(String alias);
 
   @async
   @SwiftFunction('listAlias()')
-  Map listAlias();
+  List<String> listAlias();
 
   @async
   @SwiftFunction('removeAlias(alias:)')
-  Map removeAlias(String alias);
+  void removeAlias(String alias);
 
   @async
   @SwiftFunction('bindAccount(account:)')
-  Map bindAccount(String account);
+  void bindAccount(String account);
 
   @async
   @SwiftFunction('bindPhoneNumber(phone:)')
-  Map bindPhoneNumber(String phone);
+  void bindPhoneNumber(String phone);
 
   @async
   @SwiftFunction('bindTag(tags:target:alias:)')
-  Map bindTag(List<String> tags, {int target = 1, String? alias});
+  void bindTag(List<String> tags, {int target = 1, String? alias});
 
   @async
   @SwiftFunction('unbindTag(tags:target:alias:)')
-  Map unbindTag(List<String> tags, {int target = 1, String? alias});
+  void unbindTag(List<String> tags, {int target = 1, String? alias});
 
   @async
   @SwiftFunction('listTags(target:)')
-  Map listTags({int target = 1});
-
-  @async
-  @SwiftFunction('clearNotifications()')
-  Map clearNotifications();
+  List<String> listTags({int target = 1});
 
   @async
   @SwiftFunction('getDeviceToken()')
@@ -61,29 +57,25 @@ abstract class AliyunPushIosApi {
 
   @async
   @SwiftFunction('setBadgeNum(num:)')
-  Map setIOSBadgeNum(int num);
-
-  @async
-  @SwiftFunction('setPluginLogEnabled(enabled:)')
-  void setPluginLogEnabled(bool enabled);
+  void setIOSBadgeNum(int num);
 
   @async
   @SwiftFunction('showNoticeWhenForeground(enable:)')
-  Map showIOSNoticeWhenForeground(bool enable);
+  void showIOSNoticeWhenForeground(bool enable);
 
   @async
   @SwiftFunction('syncBadgeNum(num:)')
-  Map syncIOSBadgeNum(int num);
+  void syncIOSBadgeNum(int num);
 
   @async
   @SwiftFunction('turnOnDebug()')
-  Map turnOnIOSDebug();
+  void turnOnIOSDebug();
 
   @async
   @SwiftFunction('unbindAccount()')
-  Map unbindAccount();
+  void unbindAccount();
 
   @async
   @SwiftFunction('unbindPhoneNumber()')
-  Map unbindPhoneNumber();
+  void unbindPhoneNumber();
 }
