@@ -2,6 +2,7 @@ name: aliyun_push_ios
 description: "A new Flutter plugin project."
 version: 0.0.1
 homepage: ""
+publish_to: none
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
@@ -13,7 +14,9 @@ dependencies:
   plugin_platform_interface: ^2.0.2
   aliyun_push_platform_interface:
     git:
-      url:
+      url: https://github.com/ENUUI/aliyun_push.git
+      ref: main
+      path: ./aliyun_push_platform_interface
 dev_dependencies:
   flutter_test:
     sdk: flutter

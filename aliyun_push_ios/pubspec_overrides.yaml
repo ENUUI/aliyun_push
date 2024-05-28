@@ -1,4 +1,0 @@
-dependency_overrides:
-
-  aliyun_push_platform_interface:
-    path: ../aliyun_push_platform_interface

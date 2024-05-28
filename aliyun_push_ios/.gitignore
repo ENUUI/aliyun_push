@@ -28,4 +28,4 @@ migrate_working_dir/
 .dart_tool/
 build/
 
-.pubspec_overrides.yaml
+pubspec_overrides.yaml

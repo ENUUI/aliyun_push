@@ -8,6 +8,15 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  aliyun_push_platform_interface:
+    dependency: transitive
+    description:
+      path: aliyun_push_platform_interface
+      ref: main
+      resolved-ref: a11f962ebbce76f5f08bfefec0eaa4ba605c1689
+      url: "https://github.com/ENUUI/aliyun_push.git"
+    source: git
+    version: "0.0.1"
   async:
     dependency: transitive
     description:
