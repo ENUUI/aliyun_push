@@ -473,6 +473,8 @@ abstract class AliyunPushFlutterApi {
 
   void onChannelOpened();
 
+  void onRegisterDeviceTokenSuccess(String token);
+
   static void setUp(AliyunPushFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
     messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
     {
@@ -585,6 +587,31 @@ abstract class AliyunPushFlutterApi {
         __pigeon_channel.setMessageHandler((Object? message) async {
           try {
             api.onChannelOpened();
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenSuccess$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenSuccess was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final String? arg_token = (args[0] as String?);
+          assert(arg_token != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenSuccess was null, expected non-null String.');
+          try {
+            api.onRegisterDeviceTokenSuccess(arg_token!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

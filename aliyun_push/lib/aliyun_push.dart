@@ -25,6 +25,10 @@ class AliyunPush {
   Stream<Map<dynamic, dynamic>> get notificationRemoved =>
       platform.notificationRemoved.stream;
 
+  /// APNs设备token
+  /// iOS only
+  Stream<String> get apnsDeviceToken => platform.registeredDeviceToken.stream;
+
   /// 初始化推送
   /// iOS: 同时requestAuthorization， register APNs
   Future<void> initPush({String? appKey, String? appSecret}) {

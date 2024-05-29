@@ -194,4 +194,9 @@ class AliyunPushIos extends AliyunPushInterface
   void onNotificationRemoved(Map<Object?, Object?> map) {
     notificationRemoved.add(map);
   }
+
+  @override
+  void onRegisterDeviceTokenSuccess(String token) {
+    registeredDeviceToken.add(token);
+  }
 }

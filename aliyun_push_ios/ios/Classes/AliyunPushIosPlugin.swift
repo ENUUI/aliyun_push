@@ -295,6 +295,14 @@ public extension AliyunPushIosPlugin {
         completionHandler(.newData)
         return true
     }
+
+    func application(_: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        CloudPushSDK.registerDevice(deviceToken) { r in
+            if r?.success == true {
+                self.onRegisterDeviceTokenSuccess(CloudPushSDK.getApnsDeviceToken())
+            }
+        }
+    }
 }
 
 /// flutterApi
@@ -326,6 +334,12 @@ extension AliyunPushIosPlugin {
     func onChannelOpened() {
         DispatchQueue.main.async {
             self.flutterApi.onChannelOpened { _ in }
+        }
+    }
+
+    func onRegisterDeviceTokenSuccess(_ token: String) {
+        DispatchQueue.main.async {
+            self.flutterApi.onRegisterDeviceTokenSuccess(token: token) { _ in }
         }
     }
 }

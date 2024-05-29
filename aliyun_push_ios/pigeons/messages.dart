@@ -96,4 +96,7 @@ abstract class AliyunPushFlutterApi {
 
   @SwiftFunction('onChannelOpened()')
   void onChannelOpened();
+
+  @SwiftFunction('onRegisterDeviceTokenSuccess(token:)')
+  void onRegisterDeviceTokenSuccess(String token);
 }

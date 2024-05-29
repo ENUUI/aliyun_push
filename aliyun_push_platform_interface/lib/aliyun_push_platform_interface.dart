@@ -32,6 +32,11 @@ abstract class AliyunPushInterface extends PlatformInterface {
   final StreamController<Map> notificationRemoved =
       StreamController.broadcast();
 
+  /// 注册设备token.
+  /// iOS: APNs token
+  final StreamController<String> registeredDeviceToken =
+      StreamController.broadcast();
+
   Future<void> initPush({String? appKey, String? appSecret});
 
   /// 获取deviceId
