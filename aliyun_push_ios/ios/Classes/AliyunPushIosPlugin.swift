@@ -37,7 +37,7 @@ public extension AliyunPushIosPlugin {
 extension AliyunPushIosPlugin {
     // 推送通道打开回调
     @objc func onChannelOpened(_: Notification) {
-        flutterApi.onChannelOpened { _ in }
+        onChannelOpened()
     }
 
     // 处理到来推送消息
@@ -58,7 +58,7 @@ extension AliyunPushIosPlugin {
 
         debugPrint("######## AliyunPush iOS onMessageReceived: \(mDic)")
 
-        flutterApi.onMessage(map: mDic) { _ in }
+        onMessage(mDic)
     }
 }
 
@@ -213,7 +213,7 @@ extension AliyunPushIosPlugin {
         syncBadgeNum(num: 0) { _ in }
 
         CloudPushSDK.sendNotificationAck(userInfo)
-        flutterApi.onNotification(map: userInfo) { _ in }
+        onNotification(userInfo)
     }
 
     func setBadgeCount(_: Int) {
@@ -259,14 +259,14 @@ public extension AliyunPushIosPlugin {
         let userInfo = response.notification.request.content.userInfo
         let userAction = response.actionIdentifier
         if userAction == UNNotificationDefaultActionIdentifier {
-            flutterApi.onNotificationOpened(map: userInfo) { _ in }
+           onNotificationOpened(userInfo)
             CloudPushSDK.sendNotificationAck(userInfo)
 
             debugPrint("####### ===> User opened the app from the notification interface: \(userInfo)")
         }
 
         if userAction == UNNotificationDismissActionIdentifier {
-            flutterApi.onNotificationRemoved(map: userInfo) { _ in }
+            onNotificationRemoved(userInfo)
             CloudPushSDK.sendDeleteNotificationAck(userInfo)
 
             debugPrint("####### ===> User explicitly dismissed the notification interface: \(userInfo)")
@@ -280,7 +280,7 @@ public extension AliyunPushIosPlugin {
 
         CloudPushSDK.sendNotificationAck(userInfo)
 
-        flutterApi.onNotification(map: userInfo) { _ in }
+        onNotification(userInfo)
 
         if let remoteNotification,
            let msgId = userInfo["m"] as? String,
@@ -288,11 +288,44 @@ public extension AliyunPushIosPlugin {
            msgId == remoteMsgId
         {
             CloudPushSDK.sendNotificationAck(remoteNotification)
-            flutterApi.onNotificationOpened(map: remoteNotification) { _ in }
+            onNotificationOpened(remoteNotification)
             self.remoteNotification = nil
         }
 
         completionHandler(.newData)
         return true
+    }
+}
+
+/// flutterApi
+extension AliyunPushIosPlugin {
+    func onNotification(_ userInfo: [AnyHashable: Any?]) {
+        DispatchQueue.main.async {
+            self.flutterApi.onNotification(map: userInfo) { _ in }
+        }
+    }
+    
+    func onNotificationOpened(_ userInfo: [AnyHashable: Any?]) {
+        DispatchQueue.main.async {
+            self.flutterApi.onNotificationOpened(map: userInfo) { _ in }
+        }
+    }
+    
+    func onNotificationRemoved(_ userInfo: [AnyHashable: Any?]) {
+        DispatchQueue.main.async {
+            self.flutterApi.onNotificationRemoved(map: userInfo) { _ in }
+        }
+    }
+    
+    func onMessage(_ userInfo: [AnyHashable: Any?]) {
+        DispatchQueue.main.async {
+            self.flutterApi.onMessage(map: userInfo) { _ in }
+        }
+    }
+    
+    func onChannelOpened() {
+        DispatchQueue.main.async {
+            self.flutterApi.onChannelOpened { _ in }
+        }
     }
 }
