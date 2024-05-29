@@ -298,10 +298,15 @@ public extension AliyunPushIosPlugin {
 
     func application(_: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         CloudPushSDK.registerDevice(deviceToken) { r in
+            debugPrint("###### didRegisterForRemoteNotificationsWithDeviceToken: \(CloudPushSDK.getApnsDeviceToken())")
             if r?.success == true {
                 self.onRegisterDeviceTokenSuccess(CloudPushSDK.getApnsDeviceToken())
             }
         }
+    }
+
+    func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        debugPrint("###### didFailToRegisterForRemoteNotificationsWithError: \(error.localizedDescription)")
     }
 }
 
