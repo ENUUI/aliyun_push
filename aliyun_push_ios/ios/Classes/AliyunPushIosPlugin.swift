@@ -259,7 +259,7 @@ public extension AliyunPushIosPlugin {
         let userInfo = response.notification.request.content.userInfo
         let userAction = response.actionIdentifier
         if userAction == UNNotificationDefaultActionIdentifier {
-           onNotificationOpened(userInfo)
+            onNotificationOpened(userInfo)
             CloudPushSDK.sendNotificationAck(userInfo)
 
             debugPrint("####### ===> User opened the app from the notification interface: \(userInfo)")
@@ -304,25 +304,25 @@ extension AliyunPushIosPlugin {
             self.flutterApi.onNotification(map: userInfo) { _ in }
         }
     }
-    
+
     func onNotificationOpened(_ userInfo: [AnyHashable: Any?]) {
         DispatchQueue.main.async {
             self.flutterApi.onNotificationOpened(map: userInfo) { _ in }
         }
     }
-    
+
     func onNotificationRemoved(_ userInfo: [AnyHashable: Any?]) {
         DispatchQueue.main.async {
             self.flutterApi.onNotificationRemoved(map: userInfo) { _ in }
         }
     }
-    
+
     func onMessage(_ userInfo: [AnyHashable: Any?]) {
         DispatchQueue.main.async {
             self.flutterApi.onMessage(map: userInfo) { _ in }
         }
     }
-    
+
     func onChannelOpened() {
         DispatchQueue.main.async {
             self.flutterApi.onChannelOpened { _ in }
