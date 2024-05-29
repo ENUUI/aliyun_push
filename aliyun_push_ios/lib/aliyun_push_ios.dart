@@ -4,13 +4,16 @@ import 'package:flutter/services.dart';
 
 import 'src/messages.g.dart';
 
-class AliyunPushIos extends AliyunPushInterface {
+class AliyunPushIos extends AliyunPushInterface
+    implements AliyunPushFlutterApi {
   AliyunPushIos({@visibleForTesting AliyunPushIosApi? api})
       : _hotsApi = api ?? AliyunPushIosApi();
   final AliyunPushIosApi _hotsApi;
 
   static void registerWith() {
-    AliyunPushInterface.instance = AliyunPushIos();
+    final instance = AliyunPushIos();
+    AliyunPushInterface.instance = instance;
+    AliyunPushFlutterApi.setUp(instance);
   }
 
   @override
@@ -157,5 +160,35 @@ class AliyunPushIos extends AliyunPushInterface {
   @override
   void setPluginLogEnabled(bool enabled) {
     throw PlatformException(code: '1004', message: 'Android only');
+  }
+
+  /// ######################################################
+  /// ######################################################
+  /// implements AliyunPushFlutterApi
+
+  /// 推送通道打开回调
+  @override
+  void onChannelOpened() {
+    channelOpened.value = true;
+  }
+
+  @override
+  void onMessage(Map<Object?, Object?> map) {
+    messageArrived.add(map);
+  }
+
+  @override
+  void onNotification(Map<Object?, Object?> map) {
+    notificationArrived.add(map);
+  }
+
+  @override
+  void onNotificationOpened(Map<Object?, Object?> map) {
+    notificationArrived.add(map);
+  }
+
+  @override
+  void onNotificationRemoved(Map<Object?, Object?> map) {
+    notificationRemoved.add(map);
   }
 }
