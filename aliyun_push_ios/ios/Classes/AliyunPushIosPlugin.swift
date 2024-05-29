@@ -12,6 +12,7 @@ public class AliyunPushIosPlugin: NSObject, FlutterPlugin {
         let instance = AliyunPushIosPlugin(flutterApi: flutterApi)
 
         AliyunPushIosApiSetup.setUp(binaryMessenger: registrar.messenger(), api: instance)
+        registrar.addApplicationDelegate(instance)
     }
 
     var flutterApi: AliyunPushFlutterApi
@@ -21,16 +22,6 @@ public class AliyunPushIosPlugin: NSObject, FlutterPlugin {
 
     init(flutterApi: AliyunPushFlutterApi) {
         self.flutterApi = flutterApi
-    }
-}
-
-public extension AliyunPushIosPlugin {
-    func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any] = [:]) -> Bool {
-        if let notificationInfo = launchOptions[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
-            remoteNotification = notificationInfo
-        }
-
-        return true
     }
 }
 
@@ -275,6 +266,14 @@ public extension AliyunPushIosPlugin {
         completionHandler()
     }
 
+    func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any] = [:]) -> Bool {
+        if let notificationInfo = launchOptions[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
+            remoteNotification = notificationInfo
+        }
+
+        return true
+    }
+
     func application(_: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) -> Bool {
         debugPrint("###### onNotification: \(userInfo)")
 
@@ -298,7 +297,7 @@ public extension AliyunPushIosPlugin {
 
     func application(_: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         CloudPushSDK.registerDevice(deviceToken) { r in
-            debugPrint("###### didRegisterForRemoteNotificationsWithDeviceToken: \(CloudPushSDK.getApnsDeviceToken())")
+            debugPrint("###### didRegisterForRemoteNotificationsWithDeviceToken: \(String(describing: CloudPushSDK.getApnsDeviceToken()))")
             if r?.success == true {
                 self.onRegisterDeviceTokenSuccess(CloudPushSDK.getApnsDeviceToken())
             }
