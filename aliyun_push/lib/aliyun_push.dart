@@ -7,16 +7,21 @@ class AliyunPush {
   @visibleForTesting
   static AliyunPushInterface get platform => AliyunPushInterface.instance;
 
+  /// 推送通道打开回调
   Stream<bool> get channelOpened => platform.channelOpened.stream;
 
+  /// 收到消息
   Stream<Map<dynamic, dynamic>> get message => platform.messageArrived.stream;
 
+  /// 收到通知
   Stream<Map<dynamic, dynamic>> get notification =>
       platform.notificationArrived.stream;
 
+  /// 通知打开
   Stream<Map<dynamic, dynamic>> get notificationOpened =>
       platform.notificationOpened.stream;
 
+  /// 通知移除
   Stream<Map<dynamic, dynamic>> get notificationRemoved =>
       platform.notificationRemoved.stream;
 
