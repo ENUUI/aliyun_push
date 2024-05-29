@@ -11,14 +11,17 @@ class AliyunPushIos extends AliyunPushInterface
   final AliyunPushIosApi _hotsApi;
 
   static void registerWith() {
-    final instance = AliyunPushIos();
-    AliyunPushInterface.instance = instance;
-    AliyunPushFlutterApi.setUp(instance);
+    AliyunPushInterface.instance = AliyunPushIos();
   }
 
   @override
-  Future<void> initPush({String? appKey, String? appSecret}) {
-    return _hotsApi.initPush(appKey: appKey, appSecret: appSecret);
+  Future<void> initPush({String? appKey, String? appSecret}) async {
+    try {
+      await _hotsApi.initPush(appKey: appKey, appSecret: appSecret);
+      AliyunPushFlutterApi.setUp(this);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   /// Alias
