@@ -143,7 +143,7 @@ extension AliyunPushIosPlugin: AliyunPushIosApi {
     }
 
     func getDeviceId(completion: @escaping (Result<String, Error>) -> Void) {
-        let deviceId = CloudPushSDK.getVersion()
+        let deviceId = CloudPushSDK.getDeviceId()
         guard let deviceId, !deviceId.isEmpty else {
             completion(.failure(FlutterError(code: "500", message: "AliyunPush [getDeviceId] failed!", details: "")))
             return
