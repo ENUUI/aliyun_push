@@ -7,6 +7,19 @@ class AliyunPush {
   @visibleForTesting
   static AliyunPushInterface get platform => AliyunPushInterface.instance;
 
+  Stream<bool> get channelOpened => platform.channelOpened.stream;
+
+  Stream<Map<dynamic, dynamic>> get message => platform.messageArrived.stream;
+
+  Stream<Map<dynamic, dynamic>> get notification =>
+      platform.notificationArrived.stream;
+
+  Stream<Map<dynamic, dynamic>> get notificationOpened =>
+      platform.notificationOpened.stream;
+
+  Stream<Map<dynamic, dynamic>> get notificationRemoved =>
+      platform.notificationRemoved.stream;
+
   /// 初始化推送
   /// iOS: 同时requestAuthorization， register APNs
   Future<void> initPush({String? appKey, String? appSecret}) {

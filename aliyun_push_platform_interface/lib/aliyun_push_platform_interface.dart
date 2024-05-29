@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 const MethodChannel _channel =
-MethodChannel('plugins.github.enuui/aliyun_push');
+    MethodChannel('plugins.github.enuui/aliyun_push');
 
 abstract class AliyunPushInterface extends PlatformInterface {
   AliyunPushInterface() : super(token: _token);
@@ -24,14 +24,13 @@ abstract class AliyunPushInterface extends PlatformInterface {
     _instance = instance;
   }
 
-  final ValueNotifier<bool> channelOpened = ValueNotifier(false);
+  final StreamController<bool> channelOpened = StreamController.broadcast();
   final StreamController<Map> messageArrived = StreamController.broadcast();
-  final StreamController<Map> notificationArrived = StreamController
-      .broadcast();
-  final StreamController<Map> notificationOpened =
-  StreamController.broadcast();
+  final StreamController<Map> notificationArrived =
+      StreamController.broadcast();
+  final StreamController<Map> notificationOpened = StreamController.broadcast();
   final StreamController<Map> notificationRemoved =
-  StreamController.broadcast();
+      StreamController.broadcast();
 
   Future<void> initPush({String? appKey, String? appSecret});
 
@@ -93,19 +92,19 @@ abstract class AliyunPushInterface extends PlatformInterface {
   ///
   /// Android only
   /// Other platforms will throw PlatformException
-  Future<void> createAndroidChannel(String id, String name, int importance,
-      String description,
+  Future<void> createAndroidChannel(
+      String id, String name, int importance, String description,
       {String? groupId,
-        bool? allowBubbles,
-        bool? light,
-        int? lightColor,
-        bool? showBadge,
-        String? soundPath,
-        int? soundUsage,
-        int? soundContentType,
-        int? soundFlag,
-        bool? vibration,
-        List<int>? vibrationPatterns});
+      bool? allowBubbles,
+      bool? light,
+      int? lightColor,
+      bool? showBadge,
+      String? soundPath,
+      int? soundUsage,
+      int? soundContentType,
+      int? soundFlag,
+      bool? vibration,
+      List<int>? vibrationPatterns});
 
   /// 创建通知通道的分组
   ///
@@ -221,7 +220,8 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
   /// @param target   目标类型，1: 本设备  2: 本设备绑定账号  3: 别名
   /// @param alias    别名（仅当target = 3时生效）
   @override
-  Future<void> bindTag(List<String> tags, {
+  Future<void> bindTag(
+    List<String> tags, {
     int target = 1,
     String? alias,
   }) async {
@@ -249,7 +249,7 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
   @override
   Future<List> listTags({int target = 1}) async {
     final List listResult =
-    await channel.invokeMethod('listTags', {'target': target});
+        await channel.invokeMethod('listTags', {'target': target});
     return listResult;
   }
 
@@ -305,19 +305,19 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
 
   ///创建Android平台的NotificationChannel
   @override
-  Future<void> createAndroidChannel(String id, String name, int importance,
-      String description,
+  Future<void> createAndroidChannel(
+      String id, String name, int importance, String description,
       {String? groupId,
-        bool? allowBubbles,
-        bool? light,
-        int? lightColor,
-        bool? showBadge,
-        String? soundPath,
-        int? soundUsage,
-        int? soundContentType,
-        int? soundFlag,
-        bool? vibration,
-        List<int>? vibrationPatterns}) async {
+      bool? allowBubbles,
+      bool? light,
+      int? lightColor,
+      bool? showBadge,
+      String? soundPath,
+      int? soundUsage,
+      int? soundContentType,
+      int? soundFlag,
+      bool? vibration,
+      List<int>? vibrationPatterns}) async {
     if (!Platform.isAndroid) {
       throw PlatformException(
         code: "",
@@ -345,8 +345,8 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
 
   ///创建通知通道的分组
   @override
-  Future<void> createAndroidChannelGroup(String id, String name,
-      String desc) async {
+  Future<void> createAndroidChannelGroup(
+      String id, String name, String desc) async {
     if (!Platform.isAndroid) {
       throw PlatformException(
         code: "",
@@ -369,7 +369,7 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
       );
     }
     bool enabled =
-    await channel.invokeMethod('isNotificationEnabled', {'id': id});
+        await channel.invokeMethod('isNotificationEnabled', {'id': id});
     return enabled;
   }
 

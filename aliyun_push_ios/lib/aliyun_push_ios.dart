@@ -169,7 +169,7 @@ class AliyunPushIos extends AliyunPushInterface
   /// 推送通道打开回调
   @override
   void onChannelOpened() {
-    channelOpened.value = true;
+    channelOpened.add(true);
   }
 
   @override
