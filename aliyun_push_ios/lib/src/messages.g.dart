@@ -15,6 +15,16 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
+List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
+  if (empty) {
+    return <Object?>[];
+  }
+  if (error == null) {
+    return <Object?>[result];
+  }
+  return <Object?>[error.code, error.message, error.details];
+}
+
 class AliyunPushIosApi {
   /// Constructor for [AliyunPushIosApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -446,6 +456,143 @@ class AliyunPushIosApi {
       );
     } else {
       return;
+    }
+  }
+}
+
+abstract class AliyunPushFlutterApi {
+  static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
+
+  void onNotificationOpened(Map<Object?, Object?> map);
+
+  void onNotificationRemoved(Map<Object?, Object?> map);
+
+  void onNotification(Map<Object?, Object?> map);
+
+  void onMessage(Map<Object?, Object?> map);
+
+  void onChannelOpened();
+
+  static void setUp(AliyunPushFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
+    messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotificationOpened$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotificationOpened was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotificationOpened was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onNotificationOpened(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotificationRemoved$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotificationRemoved was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotificationRemoved was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onNotificationRemoved(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotification$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotification was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onNotification was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onNotification(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onMessage$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onMessage was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onMessage was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onMessage(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onChannelOpened$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          try {
+            api.onChannelOpened();
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
     }
   }
 }

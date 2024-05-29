@@ -4,28 +4,63 @@ import Flutter
 import UIKit
 import UserNotifications
 
+extension FlutterError: Error {}
+
 public class AliyunPushIosPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let instance = AliyunPushIosPlugin()
+        let flutterApi = AliyunPushFlutterApi(binaryMessenger: registrar.messenger())
+        let instance = AliyunPushIosPlugin(flutterApi: flutterApi)
+
         AliyunPushIosApiSetup.setUp(binaryMessenger: registrar.messenger(), api: instance)
     }
 
-    var notificationInfo: [AnyHashable: Any]?
-
+    var flutterApi: AliyunPushFlutterApi
+    var notificationCenter: UNUserNotificationCenter?
+    var remoteNotification: [AnyHashable: Any]?
     var showNoticeForeground: Bool = true
+
+    init(flutterApi: AliyunPushFlutterApi) {
+        self.flutterApi = flutterApi
+    }
 }
 
 public extension AliyunPushIosPlugin {
     func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable: Any] = [:]) -> Bool {
         if let notificationInfo = launchOptions[UIApplication.LaunchOptionsKey.remoteNotification] as? [AnyHashable: Any] {
-            self.notificationInfo = notificationInfo
+            remoteNotification = notificationInfo
         }
 
         return true
     }
 }
 
-extension FlutterError: Error {}
+extension AliyunPushIosPlugin {
+    // 推送通道打开回调
+    @objc func onChannelOpened(_: Notification) {
+        flutterApi.onChannelOpened { _ in }
+    }
+
+    // 处理到来推送消息
+    @objc func onMessageReceived(_ notification: Notification) {
+        guard let message = notification.object as? CCPSysMessage else {
+            return
+        }
+
+        var mDic: [String: Any] = [:]
+
+        if let titleData = message.title, let title = String(data: titleData, encoding: .utf8) {
+            mDic["title"] = title
+        }
+
+        if let bodyData = message.body, let body = String(data: bodyData, encoding: .utf8) {
+            mDic["body"] = body
+        }
+
+        debugPrint("######## AliyunPush iOS onMessageReceived: \(mDic)")
+
+        flutterApi.onMessage(map: mDic) { _ in }
+    }
+}
 
 extension AliyunPushIosPlugin: AliyunPushIosApi {
     func initPush(appKey: String?, appSecret: String?, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -39,7 +74,16 @@ extension AliyunPushIosPlugin: AliyunPushIosApi {
             return
         }
 
+        debugPrint("######## AliyunPush iOS will register -> [appKey: \(appKey), appSecret: \(appSecret)]")
+        // 注册APNs
+        registerAPNs()
+        // 这册aliyun push
         CloudPushSDK.asyncInit(appKey, appSecret: appSecret, callback: resultCompleted("initPush", completion))
+
+        // 注册推送消息到来监听
+        NotificationCenter.default.addObserver(self, selector: #selector(onMessageReceived(_:)), name: NSNotification.Name("CCPDidReceiveMessageNotification"), object: nil)
+        // 注册推送通道打开监听
+        NotificationCenter.default.addObserver(self, selector: #selector(onChannelOpened(_:)), name: NSNotification.Name("CCPDidChannelConnectedSuccess"), object: nil)
     }
 
     func addAlias(alias: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -114,7 +158,7 @@ extension AliyunPushIosPlugin: AliyunPushIosApi {
     }
 
     func setBadgeNum(num: Int64, completion: @escaping (Result<Void, Error>) -> Void) {
-        UIApplication.shared.applicationIconBadgeNumber = Int(num)
+        setBadgeCount(Int(num))
         completion(.success(()))
     }
 
@@ -154,5 +198,101 @@ extension AliyunPushIosPlugin {
             let l = r.data as? [String] ?? []
             completion(.success(l))
         }
+    }
+}
+
+extension AliyunPushIosPlugin {
+    func handleiOS10Notification(_ notification: UNNotification) {
+        let request = notification.request
+        let content = request.content
+        let userInfo = content.userInfo
+
+        debugPrint("####### AliyunPush ios willPresent notification without Notice: \(userInfo)")
+
+        setBadgeCount(0)
+        syncBadgeNum(num: 0) { _ in }
+
+        CloudPushSDK.sendNotificationAck(userInfo)
+        flutterApi.onNotification(map: userInfo) { _ in }
+    }
+
+    func setBadgeCount(_: Int) {
+        if #available(iOS 16.0, *) {
+            UNUserNotificationCenter.current().setBadgeCount(0)
+        } else {
+            UIApplication.shared.applicationIconBadgeNumber = 0
+        }
+    }
+
+    func registerAPNs() {
+        notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter?.delegate = self
+        notificationCenter?.requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { granted, _ in
+            if granted {
+                debugPrint("####### ===> User authored notification.")
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            } else {
+                debugPrint("####### ===> User denied notification.")
+            }
+        })
+    }
+}
+
+public extension AliyunPushIosPlugin {
+    func userNotificationCenter(_: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        var opts: UNNotificationPresentationOptions = []
+
+        if showNoticeForeground {
+            opts.insert(.badge)
+            opts.insert(.sound)
+            opts.insert(.alert)
+        } else {
+            handleiOS10Notification(notification)
+        }
+
+        completionHandler(opts)
+    }
+
+    func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        let userAction = response.actionIdentifier
+        if userAction == UNNotificationDefaultActionIdentifier {
+            flutterApi.onNotificationOpened(map: userInfo) { _ in }
+            CloudPushSDK.sendNotificationAck(userInfo)
+
+            debugPrint("####### ===> User opened the app from the notification interface: \(userInfo)")
+        }
+
+        if userAction == UNNotificationDismissActionIdentifier {
+            flutterApi.onNotificationRemoved(map: userInfo) { _ in }
+            CloudPushSDK.sendDeleteNotificationAck(userInfo)
+
+            debugPrint("####### ===> User explicitly dismissed the notification interface: \(userInfo)")
+        }
+
+        completionHandler()
+    }
+
+    func application(_: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) -> Bool {
+        debugPrint("###### onNotification: \(userInfo)")
+
+        CloudPushSDK.sendNotificationAck(userInfo)
+
+        flutterApi.onNotification(map: userInfo) { _ in }
+
+        if let remoteNotification,
+           let msgId = userInfo["m"] as? String,
+           let remoteMsgId = remoteNotification["m"] as? String,
+           msgId == remoteMsgId
+        {
+            CloudPushSDK.sendNotificationAck(remoteNotification)
+            flutterApi.onNotificationOpened(map: remoteNotification) { _ in }
+            self.remoteNotification = nil
+        }
+
+        completionHandler(.newData)
+        return true
     }
 }

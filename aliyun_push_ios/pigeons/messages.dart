@@ -79,3 +79,21 @@ abstract class AliyunPushIosApi {
   @SwiftFunction('unbindPhoneNumber()')
   void unbindPhoneNumber();
 }
+
+@FlutterApi()
+abstract class AliyunPushFlutterApi {
+  @SwiftFunction('onNotificationOpened(map:)')
+  void onNotificationOpened(Map map);
+
+  @SwiftFunction('onNotificationRemoved(map:)')
+  void onNotificationRemoved(Map map);
+
+  @SwiftFunction('onNotification(map:)')
+  void onNotification(Map map);
+
+  @SwiftFunction('onMessage(map:)')
+  void onMessage(Map map);
+
+  @SwiftFunction('onChannelOpened()')
+  void onChannelOpened();
+}
