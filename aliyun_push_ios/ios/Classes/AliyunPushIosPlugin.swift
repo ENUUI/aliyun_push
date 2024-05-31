@@ -66,6 +66,12 @@ extension AliyunPushIosPlugin: AliyunPushIosApi {
         }
 
         debugPrint("######## AliyunPush iOS will register -> [appKey: \(appKey), appSecret: \(appSecret)]")
+        
+        if CloudPushSDK.isChannelOpened() {
+            completion(.success(Void()))
+            return
+        }
+        
         // 注册APNs
         registerAPNs()
         // 这册aliyun push
