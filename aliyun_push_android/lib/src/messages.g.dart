@@ -15,6 +15,16 @@ PlatformException _createConnectionError(String channelName) {
   );
 }
 
+List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
+  if (empty) {
+    return <Object?>[];
+  }
+  if (error == null) {
+    return <Object?>[result];
+  }
+  return <Object?>[error.code, error.message, error.details];
+}
+
 class AliyunPushAndroidApi {
   /// Constructor for [AliyunPushAndroidApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -529,6 +539,182 @@ class AliyunPushAndroidApi {
       );
     } else {
       return;
+    }
+  }
+}
+
+abstract class AliyunPushFlutterApi {
+  static const MessageCodec<Object?> pigeonChannelCodec = StandardMessageCodec();
+
+  /// 从通知栏打开通知的扩展处理
+  void onNotificationOpened(Map<Object?, Object?> map);
+
+  /// 通知删除回调
+  void onNotificationRemoved(Map<Object?, Object?> map);
+
+  /// 发出通知的回调
+  void onNotification(Map<Object?, Object?> map);
+
+  /// 推送消息的回调方法
+  void onMessage(Map<Object?, Object?> map);
+
+  /// 应用处于前台时通知到达回调
+  void onNotificationReceivedInApp(Map<Object?, Object?> map);
+
+  /// 无动作通知点击回调
+  void onNotificationClickedWithNoAction(Map<Object?, Object?> map);
+
+  static void setUp(AliyunPushFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
+    messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationOpened$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationOpened was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationOpened was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onNotificationOpened(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationRemoved$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationRemoved was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationRemoved was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onNotificationRemoved(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotification$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotification was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotification was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onNotification(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onMessage$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onMessage was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onMessage was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onMessage(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationReceivedInApp$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationReceivedInApp was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationReceivedInApp was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onNotificationReceivedInApp(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationClickedWithNoAction$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationClickedWithNoAction was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final Map<Object?, Object?>? arg_map = (args[0] as Map<Object?, Object?>?);
+          assert(arg_map != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_android.AliyunPushFlutterApi.onNotificationClickedWithNoAction was null, expected non-null Map<Object?, Object?>.');
+          try {
+            api.onNotificationClickedWithNoAction(arg_map!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
     }
   }
 }
