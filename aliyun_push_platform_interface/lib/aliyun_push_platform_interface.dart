@@ -33,11 +33,28 @@ abstract class AliyunPushInterface extends PlatformInterface {
   /// String: If success, the token; If failed, the error message.
   void Function(bool, String)? iOSRegisteredDeviceToken;
 
+  /// 推送消息的回调方法
   final StreamController<Map> messageArrived = StreamController.broadcast();
+
+  /// 发出通知的回调
   final StreamController<Map> notificationArrived =
       StreamController.broadcast();
+
+  /// 从通知栏打开通知的扩展处理
   final StreamController<Map> notificationOpened = StreamController.broadcast();
+
+  /// 通知删除回调
   final StreamController<Map> notificationRemoved =
+      StreamController.broadcast();
+
+  /// 无动作通知点击回调
+  /// Android only
+  final StreamController<Map> androidNotificationClickedWithNoAction =
+      StreamController.broadcast();
+
+  /// 应用处于前台时通知到达回调
+  /// Android only
+  final StreamController<Map> androidNotificationReceivedInApp =
       StreamController.broadcast();
 
   Future<void> initPush({String? appKey, String? appSecret});

@@ -3,7 +3,8 @@ import 'package:aliyun_push_platform_interface/aliyun_push_platform_interface.da
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-class AliyunPushAndroid extends AliyunPushInterface {
+class AliyunPushAndroid extends AliyunPushInterface
+    implements AliyunPushFlutterApi {
   AliyunPushAndroid({@visibleForTesting AliyunPushAndroidApi? api})
       : _hotsApi = api ?? AliyunPushAndroidApi();
   final AliyunPushAndroidApi _hotsApi;
@@ -175,5 +176,35 @@ class AliyunPushAndroid extends AliyunPushInterface {
   @override
   Future<void> turnOnIOSDebug() {
     throw PlatformException(code: '1004', message: 'iOS only');
+  }
+
+  @override
+  void onMessage(Map<Object?, Object?> map) {
+    messageArrived.add(map);
+  }
+
+  @override
+  void onNotification(Map<Object?, Object?> map) {
+    notificationArrived.add(map);
+  }
+
+  @override
+  void onNotificationOpened(Map<Object?, Object?> map) {
+    notificationOpened.add(map);
+  }
+
+  @override
+  void onNotificationRemoved(Map<Object?, Object?> map) {
+    notificationRemoved.add(map);
+  }
+
+  @override
+  void onNotificationClickedWithNoAction(Map<Object?, Object?> map) {
+    androidNotificationClickedWithNoAction.add(map);
+  }
+
+  @override
+  void onNotificationReceivedInApp(Map<Object?, Object?> map) {
+    androidNotificationReceivedInApp.add(map);
   }
 }

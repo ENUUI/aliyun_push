@@ -28,13 +28,23 @@ class AliyunPush {
   Stream<Map<dynamic, dynamic>> get notification =>
       platform.notificationArrived.stream;
 
-  /// 通知打开
+  /// 从通知栏打开通知的扩展处理
   Stream<Map<dynamic, dynamic>> get notificationOpened =>
       platform.notificationOpened.stream;
 
-  /// 通知移除
+  /// 通知删除回调
   Stream<Map<dynamic, dynamic>> get notificationRemoved =>
       platform.notificationRemoved.stream;
+
+  /// 无动作通知点击回调
+  /// Android only
+  Stream<Map<dynamic, dynamic>> androidNotificationClickedWithNoAction =
+      platform.androidNotificationClickedWithNoAction.stream;
+
+  /// 应用处于前台时通知到达回调
+  /// Android only
+  final Stream<Map<dynamic, dynamic>> androidNotificationReceivedInApp =
+      platform.androidNotificationReceivedInApp.stream;
 
   /// 初始化推送
   /// iOS: 同时requestAuthorization， register APNs
@@ -94,9 +104,8 @@ class AliyunPush {
   /// 查询标签列表
   ///
   /// @param target   目标类型，1: 本设备
-  Future<List<String>> listTags({int target = 1}) async {
-    final l = await platform.listTags(target: target);
-    return l.where((e) => e != null).toList().cast();
+  Future<List<String>> listTags({int target = 1}) {
+    return platform.listTags(target: target);
   }
 
   /// 绑定手机号

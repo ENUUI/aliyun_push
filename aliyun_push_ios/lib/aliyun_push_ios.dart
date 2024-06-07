@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:aliyun_push_platform_interface/aliyun_push_platform_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -189,7 +187,7 @@ class AliyunPushIos extends AliyunPushInterface
 
   @override
   void onNotificationOpened(Map<Object?, Object?> map) {
-    notificationArrived.add(map);
+    notificationOpened.add(map);
   }
 
   @override
