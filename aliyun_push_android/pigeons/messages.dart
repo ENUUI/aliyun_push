@@ -85,3 +85,24 @@ abstract class AliyunPushAndroidApi {
 
   void setPluginLogEnabled(bool enabled);
 }
+
+@FlutterApi()
+abstract class AliyunPushFlutterApi {
+  /// 从通知栏打开通知的扩展处理
+  void onNotificationOpened(Map map);
+
+  /// 通知删除回调
+  void onNotificationRemoved(Map map);
+
+  /// 发出通知的回调
+  void onNotification(Map map);
+
+  /// 推送消息的回调方法
+  void onMessage(Map map);
+
+  /// 应用处于前台时通知到达回调
+  void onNotificationReceivedInApp(Map map);
+
+  /// 无动作通知点击回调
+  void onNotificationClickedWithNoAction(Map map);
+}

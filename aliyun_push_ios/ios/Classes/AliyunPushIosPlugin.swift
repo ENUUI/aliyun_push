@@ -298,12 +298,15 @@ public extension AliyunPushIosPlugin {
             debugPrint("###### didRegisterForRemoteNotificationsWithDeviceToken: \(String(describing: CloudPushSDK.getApnsDeviceToken()))")
             if r?.success == true {
                 self.onRegisterDeviceTokenSuccess(CloudPushSDK.getApnsDeviceToken())
+            } else {
+                self.onRegisterDeviceTokenFailed(r?.description ?? "DeviceToken failed")
             }
         }
     }
 
     func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         debugPrint("###### didFailToRegisterForRemoteNotificationsWithError: \(error.localizedDescription)")
+        onRegisterDeviceTokenFailed(error.localizedDescription)
     }
 }
 
@@ -342,6 +345,12 @@ extension AliyunPushIosPlugin {
     func onRegisterDeviceTokenSuccess(_ token: String) {
         DispatchQueue.main.async {
             self.flutterApi.onRegisterDeviceTokenSuccess(token: token) { _ in }
+        }
+    }
+
+    func onRegisterDeviceTokenFailed(_ msg: String) {
+        DispatchQueue.main.async {
+            self.flutterApi.onRegisterDeviceTokenFailed(error: msg) { _ in }
         }
     }
 }

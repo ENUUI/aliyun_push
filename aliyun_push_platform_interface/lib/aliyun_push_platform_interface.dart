@@ -24,17 +24,20 @@ abstract class AliyunPushInterface extends PlatformInterface {
     _instance = instance;
   }
 
-  final StreamController<bool> channelOpened = StreamController.broadcast();
+  /// iOS通知打开回调
+  void Function(bool)? iOSChannelOpened;
+
+  /// 注册设备token.
+  /// iOS: APNs token
+  /// bool: 是否成功
+  /// String: If success, the token; If failed, the error message.
+  void Function(bool, String)? iOSRegisteredDeviceToken;
+
   final StreamController<Map> messageArrived = StreamController.broadcast();
   final StreamController<Map> notificationArrived =
       StreamController.broadcast();
   final StreamController<Map> notificationOpened = StreamController.broadcast();
   final StreamController<Map> notificationRemoved =
-      StreamController.broadcast();
-
-  /// 注册设备token.
-  /// iOS: APNs token
-  final StreamController<String> registeredDeviceToken =
       StreamController.broadcast();
 
   Future<void> initPush({String? appKey, String? appSecret});

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:aliyun_push_platform_interface/aliyun_push_platform_interface.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -172,7 +174,7 @@ class AliyunPushIos extends AliyunPushInterface
   /// 推送通道打开回调
   @override
   void onChannelOpened() {
-    channelOpened.add(true);
+    iOSChannelOpened?.call(true);
   }
 
   @override
@@ -197,6 +199,11 @@ class AliyunPushIos extends AliyunPushInterface
 
   @override
   void onRegisterDeviceTokenSuccess(String token) {
-    registeredDeviceToken.add(token);
+    iOSRegisteredDeviceToken?.call(true, token);
+  }
+
+  @override
+  void onRegisterDeviceTokenFailed(String error) {
+    iOSRegisteredDeviceToken?.call(false, error);
   }
 }

@@ -8,7 +8,18 @@ class AliyunPush {
   static AliyunPushInterface get platform => AliyunPushInterface.instance;
 
   /// 推送通道打开回调
-  Stream<bool> get channelOpened => platform.channelOpened.stream;
+  /// iOS only
+  set iOSChannelOpened(void Function(bool)? callback) {
+    platform.iOSChannelOpened = callback;
+  }
+
+  /// 注册设备token.
+  /// iOS: APNs token
+  /// bool: 是否成功
+  /// String: If success, the token; If failed, the error message.
+  set iOSRegisteredDeviceToken(void Function(bool, String)? callback) {
+    platform.iOSRegisteredDeviceToken = callback;
+  }
 
   /// 收到消息
   Stream<Map<dynamic, dynamic>> get message => platform.messageArrived.stream;
@@ -24,10 +35,6 @@ class AliyunPush {
   /// 通知移除
   Stream<Map<dynamic, dynamic>> get notificationRemoved =>
       platform.notificationRemoved.stream;
-
-  /// APNs设备token
-  /// iOS only
-  Stream<String> get apnsDeviceToken => platform.registeredDeviceToken.stream;
 
   /// 初始化推送
   /// iOS: 同时requestAuthorization， register APNs

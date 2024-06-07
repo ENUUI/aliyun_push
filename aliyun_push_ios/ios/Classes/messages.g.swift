@@ -344,6 +344,7 @@ protocol AliyunPushFlutterApiProtocol {
   func onMessage(map mapArg: [AnyHashable: Any?], completion: @escaping (Result<Void, FlutterError>) -> Void)
   func onChannelOpened(completion: @escaping (Result<Void, FlutterError>) -> Void)
   func onRegisterDeviceTokenSuccess(token tokenArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void)
+  func onRegisterDeviceTokenFailed(error errorArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void)
 }
 class AliyunPushFlutterApi: AliyunPushFlutterApiProtocol {
   private let binaryMessenger: FlutterBinaryMessenger
@@ -446,6 +447,24 @@ class AliyunPushFlutterApi: AliyunPushFlutterApiProtocol {
     let channelName: String = "dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenSuccess\(messageChannelSuffix)"
     let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger)
     channel.sendMessage([tokenArg] as [Any?]) { response in
+      guard let listResponse = response as? [Any?] else {
+        completion(.failure(createConnectionError(withChannelName: channelName)))
+        return
+      }
+      if listResponse.count > 1 {
+        let code: String = listResponse[0] as! String
+        let message: String? = nilOrValue(listResponse[1])
+        let details: String? = nilOrValue(listResponse[2])
+        completion(.failure(FlutterError(code: code, message: message, details: details)))
+      } else {
+        completion(.success(Void()))
+      }
+    }
+  }
+  func onRegisterDeviceTokenFailed(error errorArg: String, completion: @escaping (Result<Void, FlutterError>) -> Void) {
+    let channelName: String = "dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenFailed\(messageChannelSuffix)"
+    let channel = FlutterBasicMessageChannel(name: channelName, binaryMessenger: binaryMessenger)
+    channel.sendMessage([errorArg] as [Any?]) { response in
       guard let listResponse = response as? [Any?] else {
         completion(.failure(createConnectionError(withChannelName: channelName)))
         return

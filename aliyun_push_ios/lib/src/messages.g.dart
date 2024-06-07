@@ -431,6 +431,8 @@ abstract class AliyunPushFlutterApi {
 
   void onRegisterDeviceTokenSuccess(String token);
 
+  void onRegisterDeviceTokenFailed(String error);
+
   static void setUp(AliyunPushFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
     messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
     {
@@ -568,6 +570,31 @@ abstract class AliyunPushFlutterApi {
               'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenSuccess was null, expected non-null String.');
           try {
             api.onRegisterDeviceTokenSuccess(arg_token!);
+            return wrapResponse(empty: true);
+          } on PlatformException catch (e) {
+            return wrapResponse(error: e);
+          }          catch (e) {
+            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          }
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> __pigeon_channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenFailed$messageChannelSuffix', pigeonChannelCodec,
+          binaryMessenger: binaryMessenger);
+      if (api == null) {
+        __pigeon_channel.setMessageHandler(null);
+      } else {
+        __pigeon_channel.setMessageHandler((Object? message) async {
+          assert(message != null,
+          'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenFailed was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final String? arg_error = (args[0] as String?);
+          assert(arg_error != null,
+              'Argument for dev.flutter.pigeon.aliyun_push_ios.AliyunPushFlutterApi.onRegisterDeviceTokenFailed was null, expected non-null String.');
+          try {
+            api.onRegisterDeviceTokenFailed(arg_error!);
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);

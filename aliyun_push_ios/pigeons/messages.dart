@@ -27,14 +27,6 @@ abstract class AliyunPushIosApi {
   @SwiftFunction('bindAccount(account:)')
   void bindAccount(String account);
 
-  // @async
-  // @SwiftFunction('bindPhoneNumber(phone:)')
-  // void bindPhoneNumber(String phone);
-  //
-  // @async
-  // @SwiftFunction('unbindPhoneNumber()')
-  // void unbindPhoneNumber();
-
   @async
   @SwiftFunction('bindTag(tags:target:alias:)')
   void bindTag(List<String> tags, {int target = 1, String? alias});
@@ -99,4 +91,7 @@ abstract class AliyunPushFlutterApi {
 
   @SwiftFunction('onRegisterDeviceTokenSuccess(token:)')
   void onRegisterDeviceTokenSuccess(String token);
+
+  @SwiftFunction('onRegisterDeviceTokenFailed(error:)')
+  void onRegisterDeviceTokenFailed(String error);
 }
