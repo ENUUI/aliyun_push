@@ -21,6 +21,11 @@ dependencies:
       url: https://github.com/ENUUI/aliyun_push.git
       ref: main
       path: ./aliyun_push_ios
+  aliyun_push_android:
+    git:
+      url: https://github.com/ENUUI/aliyun_push.git
+      ref: main
+      path: ./aliyun_push_android
 
 dev_dependencies:
   flutter_test:
@@ -37,7 +42,8 @@ flutter:
     platforms:
       ios:
         default_package: aliyun_push_ios
-
+      android:
+        default_package: aliyun_push_android
 # To add assets to your package, add an assets section, like this:
 # assets:
 #   - images/a_dot_burr.jpeg
