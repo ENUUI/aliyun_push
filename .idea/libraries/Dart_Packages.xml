@@ -9,13 +9,6 @@
             </list>
           </value>
         </entry>
-        <entry key="aliyun_push_platform_interface">
-          <value>
-            <list>
-              <option value="$USER_HOME$/.pub-cache/git/aliyun_push-aa90876c9c083a1bcfd1611fc3c16490f25d5d60/aliyun_push_platform_interface/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="analyzer">
           <value>
             <list>
@@ -389,7 +382,6 @@
       <root url="file://$USER_HOME$/.dev-libs/flutter/stable/packages/flutter_test/lib" />
       <root url="file://$USER_HOME$/.dev-libs/flutter/stable/packages/fuchsia_remote_debug_protocol/lib" />
       <root url="file://$USER_HOME$/.dev-libs/flutter/stable/packages/integration_test/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/git/aliyun_push-aa90876c9c083a1bcfd1611fc3c16490f25d5d60/aliyun_push_platform_interface/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/_fe_analyzer_shared-67.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/analyzer-6.4.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/args-2.5.0/lib" />

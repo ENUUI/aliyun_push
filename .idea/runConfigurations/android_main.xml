@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="android_main" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="filePath" value="$PROJECT_DIR$/aliyun_push_android/example/lib/main.dart" />
+    <method v="2" />
+  </configuration>
+</component>

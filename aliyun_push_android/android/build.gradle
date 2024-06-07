@@ -6,6 +6,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+        // 配置HMS Core SDK的Maven仓地址。
+        maven {
+            url 'https://developer.huawei.com/repo/'
+        }
     }
 
     dependencies {
@@ -18,6 +25,13 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+        // 配置HMS Core SDK的Maven仓地址。
+        maven {
+            url 'https://developer.huawei.com/repo/'
+        }
     }
 }
 
@@ -67,15 +81,24 @@ android {
     }
 }
 
+def pushVersion = '3.8.5'
 dependencies {
-    api 'com.aliyun.ams:alicloud-android-push:3.8.7'
-
-    api "com.aliyun.ams:alicloud-android-third-push:3.8.7"
-    api "com.aliyun.ams:alicloud-android-third-push-meizu:3.8.7"
-    api "com.aliyun.ams:alicloud-android-third-push-vivo:3.8.7"
-    api "com.aliyun.ams:alicloud-android-third-push-oppo:3.8.7"
-    api "com.aliyun.ams:alicloud-android-third-push-xiaomi:3.8.7"
-    api "com.aliyun.ams:alicloud-android-third-push-huawei:3.8.7"
-    api "com.aliyun.ams:alicloud-android-third-push-honor:3.8.7"
-    api 'com.aliyun.ams:alicloud-android-third-push-fcm:3.8.7'
+    //主通道依赖
+    api "com.aliyun.ams:alicloud-android-push:$pushVersion"
+    //辅助通道基础依赖
+    api "com.aliyun.ams:alicloud-android-third-push:$pushVersion"
+    //华为依赖
+    api "com.aliyun.ams:alicloud-android-third-push-huawei:$pushVersion"
+    //小米依赖
+    api "com.aliyun.ams:alicloud-android-third-push-xiaomi:$pushVersion"
+    //OPPO依赖
+    api "com.aliyun.ams:alicloud-android-third-push-oppo:$pushVersion"
+    //vivo依赖
+    api "com.aliyun.ams:alicloud-android-third-push-vivo:$pushVersion"
+    //魅族依赖
+    api "com.aliyun.ams:alicloud-android-third-push-meizu:$pushVersion"
+    //谷歌依赖
+    api "com.aliyun.ams:alicloud-android-third-push-fcm:$pushVersion"
+    //荣耀依赖
+    api "com.aliyun.ams:alicloud-android-third-push-honor:$pushVersion"
 }

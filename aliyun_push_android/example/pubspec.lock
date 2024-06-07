@@ -9,13 +9,11 @@ packages:
     source: path
     version: "0.0.1"
   aliyun_push_platform_interface:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      path: aliyun_push_platform_interface
-      ref: main
-      resolved-ref: aa90876c9c083a1bcfd1611fc3c16490f25d5d60
-      url: "https://github.com/ENUUI/aliyun_push.git"
-    source: git
+      path: "../../aliyun_push_platform_interface"
+      relative: true
+    source: path
     version: "0.0.1"
   async:
     dependency: transitive

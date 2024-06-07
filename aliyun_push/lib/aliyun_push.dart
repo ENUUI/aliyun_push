@@ -42,6 +42,8 @@ class AliyunPush {
       platform.androidNotificationClickedWithNoAction.stream;
 
   /// 应用处于前台时通知到达回调
+  /// 应用处于前台时通知到达回调。注意:该方法仅对自定义样式通知有效,相关详情请参考:
+  ///   - https://help.aliyun.com/document_detail/30066.html?spm=5176.product30047.6.620.wjcC87#h3-3-4-basiccustompushnotification-api
   /// Android only
   final Stream<Map<dynamic, dynamic>> androidNotificationReceivedInApp =
       platform.androidNotificationReceivedInApp.stream;
