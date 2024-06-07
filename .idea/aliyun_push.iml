@@ -27,6 +27,12 @@
       <excludeFolder url="file://$MODULE_DIR$/aliyun_push_platform_interface/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/aliyun_push_platform_interface/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/aliyun_push_platform_interface/build" />
+      <excludeFolder url="file://$MODULE_DIR$/aliyun_push_android/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/aliyun_push_android/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/aliyun_push_android/build" />
+      <excludeFolder url="file://$MODULE_DIR$/aliyun_push_android/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/aliyun_push_android/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/aliyun_push_android/example/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

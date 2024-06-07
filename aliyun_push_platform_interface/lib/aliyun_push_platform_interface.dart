@@ -75,7 +75,7 @@ abstract class AliyunPushInterface extends PlatformInterface {
   /// 查询标签列表
   ///
   /// @param target   目标类型，1: 本设备
-  Future<List> listTags({int target = 1});
+  Future<List<String>> listTags({int target = 1});
 
   ///绑定手机号码
   Future<void> bindPhoneNumber(String phone);
@@ -252,10 +252,9 @@ class MethodChannelAliyunPushInterface extends AliyunPushInterface {
   ///
   /// @param target   目标类型，1: 本设备
   @override
-  Future<List> listTags({int target = 1}) async {
-    final List listResult =
-        await channel.invokeMethod('listTags', {'target': target});
-    return listResult;
+  Future<List<String>> listTags({int target = 1}) async {
+    final List l = await channel.invokeMethod('listTags', {'target': target});
+    return l.where((e) => e != null).toList().cast();
   }
 
   ///绑定手机号码

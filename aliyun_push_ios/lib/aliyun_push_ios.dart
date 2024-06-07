@@ -51,16 +51,6 @@ class AliyunPushIos extends AliyunPushInterface
     return _hotsApi.unbindAccount();
   }
 
-  @override
-  Future<void> bindPhoneNumber(String phone) {
-    return _hotsApi.bindPhoneNumber(phone);
-  }
-
-  @override
-  Future<void> unbindPhoneNumber() {
-    return _hotsApi.unbindPhoneNumber();
-  }
-
   ///添加标签
   ///
   /// @param tags     标签名
@@ -137,6 +127,16 @@ class AliyunPushIos extends AliyunPushInterface
       int? soundFlag,
       bool? vibration,
       List<int>? vibrationPatterns}) {
+    throw PlatformException(code: '1004', message: 'Android only');
+  }
+
+  @override
+  Future<void> bindPhoneNumber(String phone) {
+    throw PlatformException(code: '1004', message: 'Android only');
+  }
+
+  @override
+  Future<void> unbindPhoneNumber() {
     throw PlatformException(code: '1004', message: 'Android only');
   }
 

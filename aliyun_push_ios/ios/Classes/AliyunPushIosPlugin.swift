@@ -66,12 +66,12 @@ extension AliyunPushIosPlugin: AliyunPushIosApi {
         }
 
         debugPrint("######## AliyunPush iOS will register -> [appKey: \(appKey), appSecret: \(appSecret)]")
-        
+
         if CloudPushSDK.isChannelOpened() {
-            completion(.success(Void()))
+            completion(.success(()))
             return
         }
-        
+
         // 注册APNs
         registerAPNs()
         // 这册aliyun push
@@ -106,14 +106,6 @@ extension AliyunPushIosPlugin: AliyunPushIosApi {
 
     func unbindAccount(completion: @escaping (Result<Void, Error>) -> Void) {
         CloudPushSDK.unbindAccount(resultCompleted("unbindAccount", completion))
-    }
-
-    func bindPhoneNumber(phone _: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        completion(.failure(FlutterError(code: "500", message: "The method [bindPhoneNumber] not implemented.", details: "")))
-    }
-
-    func unbindPhoneNumber(completion: @escaping (Result<Void, Error>) -> Void) {
-        completion(.failure(FlutterError(code: "500", message: "The method [unbindPhoneNumber] not implemented.", details: "")))
     }
 
     func bindTag(tags: [String], target: Int64, alias: String?, completion: @escaping (Result<Void, Error>) -> Void) {

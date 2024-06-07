@@ -27,9 +27,13 @@ abstract class AliyunPushIosApi {
   @SwiftFunction('bindAccount(account:)')
   void bindAccount(String account);
 
-  @async
-  @SwiftFunction('bindPhoneNumber(phone:)')
-  void bindPhoneNumber(String phone);
+  // @async
+  // @SwiftFunction('bindPhoneNumber(phone:)')
+  // void bindPhoneNumber(String phone);
+  //
+  // @async
+  // @SwiftFunction('unbindPhoneNumber()')
+  // void unbindPhoneNumber();
 
   @async
   @SwiftFunction('bindTag(tags:target:alias:)')
@@ -74,10 +78,6 @@ abstract class AliyunPushIosApi {
   @async
   @SwiftFunction('unbindAccount()')
   void unbindAccount();
-
-  @async
-  @SwiftFunction('unbindPhoneNumber()')
-  void unbindPhoneNumber();
 }
 
 @FlutterApi()

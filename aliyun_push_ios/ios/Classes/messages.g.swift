@@ -50,7 +50,6 @@ protocol AliyunPushIosApi {
   func listAlias(completion: @escaping (Result<[String], Error>) -> Void)
   func removeAlias(alias: String, completion: @escaping (Result<Void, Error>) -> Void)
   func bindAccount(account: String, completion: @escaping (Result<Void, Error>) -> Void)
-  func bindPhoneNumber(phone: String, completion: @escaping (Result<Void, Error>) -> Void)
   func bindTag(tags: [String], target: Int64, alias: String?, completion: @escaping (Result<Void, Error>) -> Void)
   func unbindTag(tags: [String], target: Int64, alias: String?, completion: @escaping (Result<Void, Error>) -> Void)
   func listTags(target: Int64, completion: @escaping (Result<[String], Error>) -> Void)
@@ -62,7 +61,6 @@ protocol AliyunPushIosApi {
   func syncBadgeNum(num: Int64, completion: @escaping (Result<Void, Error>) -> Void)
   func turnOnDebug(completion: @escaping (Result<Void, Error>) -> Void)
   func unbindAccount(completion: @escaping (Result<Void, Error>) -> Void)
-  func unbindPhoneNumber(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -154,23 +152,6 @@ class AliyunPushIosApiSetup {
       }
     } else {
       bindAccountChannel.setMessageHandler(nil)
-    }
-    let bindPhoneNumberChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.bindPhoneNumber\(channelSuffix)", binaryMessenger: binaryMessenger)
-    if let api = api {
-      bindPhoneNumberChannel.setMessageHandler { message, reply in
-        let args = message as! [Any?]
-        let phoneArg = args[0] as! String
-        api.bindPhoneNumber(phone: phoneArg) { result in
-          switch result {
-          case .success:
-            reply(wrapResult(nil))
-          case .failure(let error):
-            reply(wrapError(error))
-          }
-        }
-      }
-    } else {
-      bindPhoneNumberChannel.setMessageHandler(nil)
     }
     let bindTagChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.bindTag\(channelSuffix)", binaryMessenger: binaryMessenger)
     if let api = api {
@@ -352,21 +333,6 @@ class AliyunPushIosApiSetup {
       }
     } else {
       unbindAccountChannel.setMessageHandler(nil)
-    }
-    let unbindPhoneNumberChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.aliyun_push_ios.AliyunPushIosApi.unbindPhoneNumber\(channelSuffix)", binaryMessenger: binaryMessenger)
-    if let api = api {
-      unbindPhoneNumberChannel.setMessageHandler { _, reply in
-        api.unbindPhoneNumber { result in
-          switch result {
-          case .success:
-            reply(wrapResult(nil))
-          case .failure(let error):
-            reply(wrapError(error))
-          }
-        }
-      }
-    } else {
-      unbindPhoneNumberChannel.setMessageHandler(nil)
     }
   }
 }
