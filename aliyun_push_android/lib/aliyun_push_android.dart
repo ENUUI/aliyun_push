@@ -17,7 +17,7 @@ class AliyunPushAndroid extends AliyunPushInterface
   Future<void> initPush({String? appKey, String? appSecret}) async {
     try {
       await _hotsApi.initPush();
-      // AliyunPushFlutterApi.setUp(this);
+      AliyunPushFlutterApi.setUp(this);
     } catch (e) {
       rethrow;
     }
